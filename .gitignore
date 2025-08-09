@@ -1,0 +1,52 @@
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos de sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+logs
+*.log
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Cache do npm
+.npm
+
+# Arquivos temporários
+*.tmp
+*.temp
+*~
+
+# IDEs e editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Arquivos de build/dist (caso adicione futuramente)
+dist/
+build/
+
+# Coverage de testes (caso adicione futuramente)
+coverage/
+.nyc_output
+
+# Arquivos específicos do projeto
+# (descomente se quiser ignorar os QR codes gerados)
+# qrcodes/

@@ -1,0 +1,16 @@
+{
+  "name": "qrcode-host",
+  "version": "1.0.0",
+  "description": "Gerador de QR codes para mensagens simples",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
+  },
+  "keywords": ["qrcode", "generator", "messages"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "qrcode": "^1.5.3"
+  }
+}
