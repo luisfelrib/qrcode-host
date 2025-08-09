@@ -50,3 +50,4 @@ coverage/
 # Arquivos específicos do projeto
 # (descomente se quiser ignorar os QR codes gerados)
 # qrcodes/
+qrcodes/

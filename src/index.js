@@ -38,12 +38,14 @@ async function gerarQRCode(mensagem, filename) {
 // Função principal para gerar todos os QR codes
 async function gerarQRCodes() {
     console.log('🚀 Gerando QR codes...\n');
-
+    
     for (const item of MENSAGENS) {
-        const filename = `qrcode_${item.id}_${item.titulo.toLowerCase().replace(/\s+/g, '_')}`;
-        await gerarQRCode(item.mensagem, filename);
+        // Combina título e mensagem para aparecer no QR code
+        const textoCompleto = `${item.titulo}\n\n${item.mensagem}`;
+        const filename = `qrcode_${item.id}_${item.name}`;
+        await gerarQRCode(textoCompleto, filename);
     }
-
+    
     console.log(`\n🎉 Concluído! ${MENSAGENS.length} QR codes gerados na pasta 'qrcodes/'`);
 }
 
