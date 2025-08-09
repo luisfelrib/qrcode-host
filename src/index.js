@@ -15,20 +15,25 @@ if (!fs.existsSync(outputDir)) {
 async function gerarQRCode(mensagem, filename) {
     try {
         const qrCodePath = path.join(outputDir, `${filename}.png`);
-
+        
         await QRCode.toFile(qrCodePath, mensagem, {
             color: {
                 dark: '#000000',
                 light: '#FFFFFF'
             },
             width: 300,
-            margin: 2
+            margin: 2,
+            // Configurações para melhor compatibilidade
+            errorCorrectionLevel: 'M',  // Nível médio de correção de erro
+            type: 'png',                // Formato explícito
+            quality: 0.92,              // Alta qualidade
+            mode: 'byte'                // Modo byte para melhor suporte a caracteres
         });
-
+        
         console.log(`✅ QR Code criado: ${filename}.png`);
         console.log(`📱 Mensagem: "${mensagem}"`);
         console.log('---');
-
+        
         return qrCodePath;
     } catch (error) {
         console.error(`❌ Erro ao gerar QR code:`, error);
