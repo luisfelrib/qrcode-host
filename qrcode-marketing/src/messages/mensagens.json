@@ -1,0 +1,28 @@
+{
+  "mensagens": [
+    {
+      "id": 1,
+      "titulo": "Promoção de Verão",
+      "mensagem": "Aproveite nossas ofertas de verão! Descontos de até 50% em produtos selecionados.",
+      "url": "https://www.exemplo.com/promocao-verao"
+    },
+    {
+      "id": 2,
+      "titulo": "Lançamento de Produto",
+      "mensagem": "Conheça nosso novo produto revolucionário! Clique para saber mais.",
+      "url": "https://www.exemplo.com/lancamento-produto"
+    },
+    {
+      "id": 3,
+      "titulo": "Newsletter",
+      "mensagem": "Inscreva-se na nossa newsletter e fique por dentro das novidades!",
+      "url": "https://www.exemplo.com/newsletter"
+    },
+    {
+      "id": 4,
+      "titulo": "Evento Especial",
+      "mensagem": "Participe do nosso evento especial e ganhe brindes exclusivos!",
+      "url": "https://www.exemplo.com/evento-especial"
+    }
+  ]
+}
