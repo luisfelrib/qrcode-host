@@ -26,7 +26,7 @@ async function gerarQRCode(mensagem, filename) {
 
         await QRCode.toFile(qrCodePath, mensagem, {
             color: {
-                dark: '#000000',
+                dark: '#f00303ff',
                 light: '#FFFFFF'
             },
             width: 300,
