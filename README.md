@@ -46,19 +46,19 @@ BASE_URL=https://seuusuario.github.io/qrcode-host npm start
 ```
 
 ### Estrutura das mensagens
-Edite o arquivo `src/messages/mensagens.json` para adicionar suas próprias mensagens:
+Edite o arquivo `src/mensagens.js` para adicionar suas próprias mensagens. Cada item pode definir uma rota para gerar a página correspondente no GitHub Pages:
 
-```json
-{
-  "mensagens": [
-    {
-      "id": 1,
-      "titulo": "Seu Título",
-      "mensagem": "Sua mensagem aqui",
-      "url": "opcional - não será usado nos QR codes"
-    }
-  ]
-}
+```javascript
+const MENSAGENS = [
+  {
+    id: 1,
+    titulo: 'Seu Título',
+    mensagem: 'Sua mensagem aqui',
+    route: '/minha-rota'
+  }
+];
+
+module.exports = MENSAGENS;
 ```
 
 ### Uso programático
@@ -82,8 +82,7 @@ qrcode-host/
 ├── package.json              # Configurações do projeto
 ├── src/
 │   ├── index.js              # Código principal
-│   └── messages/
-│       └── mensagens.json    # Mensagens para gerar QR codes
+│   └── mensagens.js          # Mensagens para gerar QR codes
 └── qrcodes/                  # QR codes gerados (PNG)
     ├── qrcode_1_titulo.png
     └── ...

@@ -51,6 +51,7 @@ async function gerarQRCode(mensagem, filename) {
 // Gera uma página HTML com a mensagem
 async function gerarPaginaHTML(item, filename) {
     const htmlPath = path.join(htmlDir, filename);
+    await fs.promises.mkdir(path.dirname(htmlPath), { recursive: true });
     const conteudoHTML = `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n<title>${item.titulo}</title>\n<style>body{font-family:Arial,sans-serif;padding:1rem;}h1{font-size:1.5rem;}p{white-space:pre-line;font-size:1.2rem;}</style>\n</head>\n<body>\n<h1>${item.titulo}</h1>\n<p>${item.mensagem}</p>\n</body>\n</html>`;
 
     await fs.promises.writeFile(htmlPath, conteudoHTML, 'utf8');
@@ -63,10 +64,11 @@ async function gerarQRCodes() {
     console.log('🚀 Gerando páginas HTML e QR codes...\n');
 
     for (const item of MENSAGENS) {
-        const htmlFilename = `${item.id}_${item.name}.html`;
+        const route = item.route ? item.route.replace(/^\//, '') : `${item.id}_${item.name}`;
+        const htmlFilename = path.join(route, 'index.html');
         await gerarPaginaHTML(item, htmlFilename);
 
-        const url = `${BASE_URL}/${htmlFilename}`;
+        const url = `${BASE_URL}${item.route || `/${route}`}`;
         const qrFilename = `qrcode_${item.id}_${item.name}`;
         await gerarQRCode(url, qrFilename);
         console.log(`🌐 URL: ${url}`);
