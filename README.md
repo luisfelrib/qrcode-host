@@ -39,6 +39,12 @@ npm start
 node src/index.js
 ```
 
+Por padrão, cada mensagem gera uma página HTML em `docs/` e um QR code que aponta para ela. Configure a variável de ambiente `BASE_URL` com a URL do seu GitHub Pages para que os links sejam gerados corretamente:
+
+```bash
+BASE_URL=https://seuusuario.github.io/qrcode-host npm start
+```
+
 ### Estrutura das mensagens
 Edite o arquivo `src/messages/mensagens.json` para adicionar suas próprias mensagens:
 

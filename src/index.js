@@ -5,17 +5,25 @@ const path = require('path');
 // Carrega as mensagens do arquivo JavaScript
 const MENSAGENS = require('./mensagens');
 
-// Cria diretório para salvar os QR codes se não existir
+// Base URL para os links dos QR codes (GitHub Pages)
+const BASE_URL = process.env.BASE_URL || 'https://YOUR_GITHUB_USERNAME.github.io/qrcode-host';
+
+// Diretórios de saída
 const outputDir = path.join(__dirname, '..', 'qrcodes');
-if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
+const htmlDir = path.join(__dirname, '..', 'docs');
+
+// Garante que as pastas existam
+for (const dir of [outputDir, htmlDir]) {
+    if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+    }
 }
 
-// Função para gerar QR code para uma mensagem
+// Função para gerar QR code para uma mensagem (ou URL)
 async function gerarQRCode(mensagem, filename) {
     try {
         const qrCodePath = path.join(outputDir, `${filename}.png`);
-        
+
         await QRCode.toFile(qrCodePath, mensagem, {
             color: {
                 dark: '#000000',
@@ -29,29 +37,43 @@ async function gerarQRCode(mensagem, filename) {
             quality: 0.92,              // Alta qualidade
             mode: 'byte'                // Modo byte para melhor suporte a caracteres
         });
-        
+
         console.log(`✅ QR Code criado: ${filename}.png`);
-        console.log(`📱 Mensagem: "${mensagem}"`);
+        console.log(`📱 Conteúdo: "${mensagem}"`);
         console.log('---');
-        
+
         return qrCodePath;
     } catch (error) {
         console.error(`❌ Erro ao gerar QR code:`, error);
     }
 }
 
-// Função principal para gerar todos os QR codes
+// Gera uma página HTML com a mensagem
+async function gerarPaginaHTML(item, filename) {
+    const htmlPath = path.join(htmlDir, filename);
+    const conteudoHTML = `<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n<meta charset="UTF-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n<title>${item.titulo}</title>\n<style>body{font-family:Arial,sans-serif;padding:1rem;}h1{font-size:1.5rem;}p{white-space:pre-line;font-size:1.2rem;}</style>\n</head>\n<body>\n<h1>${item.titulo}</h1>\n<p>${item.mensagem}</p>\n</body>\n</html>`;
+
+    await fs.promises.writeFile(htmlPath, conteudoHTML, 'utf8');
+    console.log(`📝 Página gerada: ${filename}`);
+    return htmlPath;
+}
+
+// Função principal para gerar todas as páginas e QR codes
 async function gerarQRCodes() {
-    console.log('🚀 Gerando QR codes...\n');
-    
+    console.log('🚀 Gerando páginas HTML e QR codes...\n');
+
     for (const item of MENSAGENS) {
-        // Combina título e mensagem para aparecer no QR code
-        const textoCompleto = `${item.titulo}\n\n${item.mensagem}`;
-        const filename = `qrcode_${item.id}_${item.name}`;
-        await gerarQRCode(textoCompleto, filename);
+        const htmlFilename = `${item.id}_${item.name}.html`;
+        await gerarPaginaHTML(item, htmlFilename);
+
+        const url = `${BASE_URL}/${htmlFilename}`;
+        const qrFilename = `qrcode_${item.id}_${item.name}`;
+        await gerarQRCode(url, qrFilename);
+        console.log(`🌐 URL: ${url}`);
+        console.log('---');
     }
-    
-    console.log(`\n🎉 Concluído! ${MENSAGENS.length} QR codes gerados na pasta 'qrcodes/'`);
+
+    console.log(`\n🎉 Concluído! ${MENSAGENS.length} páginas em 'docs/' e QR codes em 'qrcodes/'`);
 }
 
 // Executa quando o arquivo é chamado diretamente
@@ -61,6 +83,8 @@ if (require.main === module) {
 
 module.exports = {
     gerarQRCode,
+    gerarPaginaHTML,
     gerarQRCodes,
-    MENSAGENS
+    MENSAGENS,
+    BASE_URL
 };
