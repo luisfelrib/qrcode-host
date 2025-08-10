@@ -6,7 +6,7 @@ const path = require('path');
 const MENSAGENS = require('./mensagens');
 
 // Base URL para os links dos QR codes (GitHub Pages)
-const BASE_URL = process.env.BASE_URL || 'https://YOUR_GITHUB_USERNAME.github.io/qrcode-host';
+const BASE_URL = process.env.BASE_URL || 'https://luisfelrib.github.io/qrcode-host';
 
 // Diretórios de saída
 const outputDir = path.join(__dirname, '..', 'qrcodes');
